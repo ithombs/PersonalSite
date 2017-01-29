@@ -1,0 +1,27 @@
+@CHARSET "ISO-8859-1";
+
+.chessboard {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 30vw;
+  height: 30vw;
+
+}
+.chessboard > div {
+  width: 12.5%;
+  height: 12.5%;
+  background-color:gray;
+
+}
+
+div:nth-child(16n+1),
+div:nth-child(16n+3),
+div:nth-child(16n+5),
+div:nth-child(16n+7),
+div:nth-child(16n+10),
+div:nth-child(16n+12),
+div:nth-child(16n+14),
+div:nth-child(16n+16){
+    background-color:white;
+}

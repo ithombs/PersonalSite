@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Ian Thombs - Personal</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.js"></script>
+
+<script th:src="@{/js/misc.js}"></script>
+<script th:src="@{/js/webSocketStuff.js}"></script>
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/basicPersonal.css}" />
+
+</head>
+<body>
+	<script>
+		test();
+	</script>
+	<div class="container">
+		<div class="top-bar">
+			<h1>Ian Thombs</h1>
+			<div class="main-button-container">
+				<button id="dev-btn"  class="main-buttons"><h2>Developer</h2></button>
+				<button id="music-btn" class="main-buttons"><h2>Musician</h2></button>
+			</div>
+		</div>
+		<div class="separator"></div>
+		<div class="main-content">
+			<div id="dev-blurb">
+				<h1>Developer</h1>
+				<div class="dev-selections">
+					<span><button class="dev-selection-btn">Projects</button></span>
+					<span><button class="dev-selection-btn">R&#232;sum&#232;</button></span>
+					<span><button class="dev-selection-btn">Relevant Links</button></span>
+				</div>
+				<div class="projects-div">
+					Lorem ipsum dolar projects projects projects
+				</div>
+				<div class="resume-div">
+					Lorem ipsum dolar resume resume resume resume
+				</div>
+				<div class="rel-links-div">
+					Lorem ipsum dolar links links link links
+				</div>
+			</div>
+			<div id="music-blurb">
+				<h1>Music shit</h1>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

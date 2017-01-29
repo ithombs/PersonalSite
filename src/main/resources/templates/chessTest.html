@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Chessboard test</title>
+
+<script th:src="@{/js/chess.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.1/sockjs.js"></script>
+
+<style>
+
+
+.chessboard {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 30vw;
+  height: 30vw;
+
+}
+.chessboard > div {
+  width: 12.5%;
+  height: 12.5%;
+  background-color:gray;
+
+}
+
+div:nth-child(16n+1),
+div:nth-child(16n+3),
+div:nth-child(16n+5),
+div:nth-child(16n+7),
+div:nth-child(16n+10),
+div:nth-child(16n+12),
+div:nth-child(16n+14),
+div:nth-child(16n+16){
+    background-color:white;
+}
+
+</style>
+</head>
+<body>
+	<div class="chessboard">
+		<div id="0|0" title="a8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|1" title="b8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|2" title="c8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|3" title="d8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|4" title="e8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|5" title="f8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|6" title="g8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="0|7" title="h8" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|0" title="a7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|1" title="b7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|2" title="c7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|3" title="d7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|4" title="e7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|5" title="f7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|6" title="g7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="1|7" title="h7" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|0" title="a6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|1" title="b6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|2" title="c6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|3" title="d6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|4" title="e6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|5" title="f6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|6" title="g6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="2|7" title="h6" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|0" title="a5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|1" title="b5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|2" title="c5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|3" title="d5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|4" title="e5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|5" title="f5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|6" title="g5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="3|7" title="h5" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|0" title="a4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|1" title="b4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|2" title="c4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|3" title="d4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|4" title="e4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|5" title="f4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|6" title="g4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="4|7" title="h4" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|0" title="a3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|1" title="b3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|2" title="c3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|3" title="d3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|4" title="e3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|5" title="f3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|6" title="g3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="5|7" title="h3" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|0" title="a2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|1" title="b2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|2" title="c2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|3" title="d2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|4" title="e2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|5" title="f2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|6" title="g2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="6|7" title="h2" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|0" title="a1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|1" title="b1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|2" title="c1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|3" title="d1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|4" title="e1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|5" title="f1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|6" title="g1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	    <div id="7|7" title="h1" onClick='boardClick(this.id)' ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	</div>
+
+</body>
+</html>
