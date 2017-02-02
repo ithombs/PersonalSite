@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.Models.ChessMatchmaking;
+
 /*
  * Notes:
  * -The URL /personal/chessSocket is used for the player websocket connections
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PersonalController {
 	private static final Logger log = LoggerFactory.getLogger(PersonalController.class);
 	
+	@Autowired
+	private ChessMatchmaking cMatcher;
 	
 	@RequestMapping({"/", ""})
 	public String personalHome(HttpSession session, Principal principal){
@@ -33,6 +37,7 @@ public class PersonalController {
 	
 	@RequestMapping("/chessboard")
 	public String chessboard(){
+		log.info("ChessMatchmaking hashcode = " + cMatcher.hashCode());
 		return "chessTest";
 	}
 	

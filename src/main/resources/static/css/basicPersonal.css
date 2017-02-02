@@ -21,6 +21,7 @@ html, body{
 
 .separator{
 	flex:0 1 2%;
+	min-height: 10px;
 }
 
 .top-bar{
@@ -29,6 +30,8 @@ html, body{
 	color: #5d35ff;
 	width:35%;
 	flex:1 1 5%;
+	min-height: 200px;
+	min-width: 500px;
 	border: 1px solid;
 	background: linear-gradient(to right, #417fcf, #84b9ff);
 	-webkit-box-shadow: -1px 1px 47px 0px rgba(0,0,0,0.38);
@@ -53,7 +56,7 @@ html, body{
 	background: linear-gradient(to right, #396db0, #658bbd);
 	flex:1 1 50%;
 	border: 1px solid;
-	
+	min-height:500px;
 	justify-content:space-between;
 	flex-direction:column;
 	flex-wrap:wrap;
@@ -93,6 +96,8 @@ html, body{
 
 .projects-div, .resume-div, .rel-links-div{
 	display:none;
+	padding-top: 75px;
+	text-align: center;
 }
 
 .dev-selections{
@@ -100,13 +105,18 @@ html, body{
 	flex-direction:row;
 	flex-wrap:wrap;
 	justify-content:center;
+	
 }
 
 .dev-selection{
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 40px;
+	padding-right: 40px;
 	transition:all 0.3s ease;
 	cursor:default;
+	-moz-box-sizing: border-box;
+  	-webkit-box-sizing: border-box;
+  	-ms-box-sizing: border-box;
+  	box-sizing: border-box;
 }
 
 .dev-selection:hover{

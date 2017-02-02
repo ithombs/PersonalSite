@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import com.example.Models.Side;
 import com.example.Models.ChessPiece.*;
 import com.example.Models.ChessAI;
 import com.example.Models.ChessBoard;
+import com.example.Models.ChessMatchmaking;
 import com.example.Models.ChessPiece;
 import com.example.Models.Role;
 
@@ -28,12 +30,17 @@ public class ChessHandler  extends TextWebSocketHandler{
 	//NOTE: Replace this user map with something more robust if this is ever used as more than a simple demo
 	private static final Map<String, WebSocketSession> connectedPlayers = new HashMap<String, WebSocketSession>();
 	
+	@Autowired
+	ChessMatchmaking cMatcher;
+	
 	public ChessHandler(){
 		
 	}
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession wsSession){
+		//TODO: Add in a Query String for use when a client connects from someplace other than the web
+		//TODO: Alternatively, just authenticate from the client as normal
 		String username = "";
 		//UserDetails currentUser = (UserDetails) ((Authentication) WebSocketSession.getPrincipal()).getPrincipal();
 		
@@ -41,8 +48,8 @@ public class ChessHandler  extends TextWebSocketHandler{
 			wsSession.getAttributes().put("username", wsSession.getPrincipal().getName());
 			username = wsSession.getPrincipal().getName();
 		}else{
-			wsSession.getAttributes().put("username", "guest-" + wsSession.getId());
-			username = wsSession.getId();
+			username = "guest-" + wsSession.getId();
+			wsSession.getAttributes().put("username", username);
 		}
 		log.info("Websocket WebSocketSession created - " + username);
 		//currentUser.getAuthorities().forEach(ga -> log.info(ga.getAuthority()));
@@ -50,7 +57,7 @@ public class ChessHandler  extends TextWebSocketHandler{
 		String type = wsSession.getUri().getQuery();
 		log.info("Query Info: "+ type);
 		
-		
+		log.info("ChessMatchmaking hashcode = " + cMatcher.hashCode());
 	}
 	
 	@Override
@@ -78,19 +85,22 @@ public class ChessHandler  extends TextWebSocketHandler{
         
     	if(message.startsWith("connect"))
         {
-        	log.info("CONNECTION PORTION ENTERED OF WEBSOCKSERVER");
-        	String type = message.split(":")[1];
+    		String type = message.split(":")[1];
+        	log.info("Player entered queue - " + type);
+        	
         	initPlayer(wsSession, type);
         	initGame(wsSession, type);
         }
         else if(message.startsWith("recon"))
-        {   	
+        { 
         	reconnect(wsSession, message.split(":")[1]);
         }
         //The pipe character denotes an attempted move from a client
         else if(message.contains("|"))
         {
-        	recieveMove(wsSession, message);
+        	if(wsSession.getAttributes().get("status").equals("inGame")){
+        		recieveMove(wsSession, message);
+        	}
         }
         //Send the move list data to the reconnecting opponent
         else if(message.contains("md"))
@@ -210,64 +220,15 @@ public class ChessHandler  extends TextWebSocketHandler{
         			{
         				log.info("AI Opponent problem - initGame: " + e.getMessage());
         			}
+        			wsSession.getAttributes().put("status", "inGame");
         		}
     		}catch(Exception e){
     			log.info("Error parsing AI level - " + e);
     		}
     	}else{
     		//Find a match for a human game
-        	Iterator<WebSocketSession> players = connectedPlayers.values().iterator();
-        	while(players.hasNext())
-        	{
-        		WebSocketSession s = players.next();
-        		String status = (String)s.getAttributes().get("status");
-        		if(status.equals("open") && !s.getId().equals(wsSession.getId()) && !wsSession.getAttributes().get("username").equals(s.getAttributes().get("username")))
-        		{
-        			String user, opponent;
-        			s.getAttributes().put("status", "inGame");
-        			wsSession.getAttributes().put("status", "inGame");
-        			
-        			user = (String)wsSession.getAttributes().get("username");
-        			opponent = (String)s.getAttributes().get("username");
-        			log.info("User: "  +user + "\nOpponent: " + opponent);
-        			
-        			try
-        			{
-        				Random r = new Random();
-        				if(r.nextInt(2) == 0)
-        				{
-        					s.getAttributes().put("side", Side.WHITE);
-        					wsSession.getAttributes().put("side", Side.BLACK);
-        				}
-        				else
-        				{
-        					s.getAttributes().put("side", Side.BLACK);
-        					wsSession.getAttributes().put("side", Side.WHITE);
-        				}
-        				
-        				
-        				
-        				//put opponents into each others map
-        				wsSession.getAttributes().put("opponent", opponent);
-        				s.getAttributes().put("opponent", user);
-        				
-        				//Send to the client that they connected to a match
-        				s.sendMessage(new TextMessage("connnected"));
-        				wsSession.sendMessage(new TextMessage("connected") );
-        				
-        				//Send opponent name and SIDE
-        				wsSession.sendMessage(new TextMessage("opponent:"+ opponent));
-        				wsSession.sendMessage(new TextMessage("side:" + wsSession.getAttributes().get("side").toString()));
-        				s.sendMessage(new TextMessage("opponent:"+ user));
-        				s.sendMessage(new TextMessage("side:" + s.getAttributes().get("side").toString()));
-        			}
-        			catch(Exception e)
-        			{
-        				log.info("Error finding opponent for Chess game: " + e.getMessage());
-        			}
-        			break;
-        		}
-        	}
+    		//cMatcher.addPlayerToPool(wsSession);
+        	cMatcher.findMatch(wsSession);
     	}
 	}
 	
