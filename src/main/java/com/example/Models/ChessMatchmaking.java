@@ -60,7 +60,7 @@ public class ChessMatchmaking {
     			
     			user = (String)searchingPlayer.getAttributes().get("username");
     			opponent = (String)s.getAttributes().get("username");
-    			log.info("User: "  +user + "\nOpponent: " + opponent);
+    			log.info("User: "  +user + " --- Opponent: " + opponent);
     			
     			try
     			{
@@ -109,11 +109,12 @@ public class ChessMatchmaking {
 	@Scheduled(fixedDelay = 10000)
 	public void purgePlayers(){
 		Iterator<String> playerNames = playerPool.keySet().iterator();
-		
+		//log.info("---Purging player pool---");
 		while(playerNames.hasNext()){
 			String player = playerNames.next();
 			WebSocketSession wsSession = playerPool.get(player);
 			if(!wsSession.isOpen()){
+				log.info("Removing disconnected player - " + player);
 				playerPool.remove(player);
 			}
 		}

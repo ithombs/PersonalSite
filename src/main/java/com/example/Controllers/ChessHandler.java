@@ -57,7 +57,7 @@ public class ChessHandler  extends TextWebSocketHandler{
 		String type = wsSession.getUri().getQuery();
 		log.info("Query Info: "+ type);
 		
-		log.info("ChessMatchmaking hashcode = " + cMatcher.hashCode());
+		//log.info("ChessMatchmaking hashcode = " + cMatcher.hashCode());
 	}
 	
 	@Override
@@ -371,7 +371,6 @@ public class ChessHandler  extends TextWebSocketHandler{
                 			wsSession.sendMessage(new TextMessage("ml2:" + row+ "|" + col));
                 			
                 			//Check if the move ended the game
-                			//TODO: Test this to make sure it gets the correct winner in each instance
                 			if(b.getPossibleMoves(Side.WHITE).size() == 0 || b.getPossibleMoves(Side.BLACK).size() == 0)
                 			{
                 				wsSession.sendMessage(new TextMessage("gameOver:" + userSide.toString()));
@@ -386,8 +385,8 @@ public class ChessHandler  extends TextWebSocketHandler{
         	}
         	else //Move the piece back on the player's screen if the move was bad.
         	{
-        		log.info("bad move, returning piece.");
-        		log.info(id + "|" + b.getPiece(id).getRow() + "|" + b.getPiece(id).getCol());
+        		//log.info("bad move, returning piece.");
+        		//log.info(id + "|" + b.getPiece(id).getRow() + "|" + b.getPiece(id).getCol());
         		wsSession.sendMessage(new TextMessage("-Bad Move-"));
         		wsSession.sendMessage(new TextMessage("move:" +id + "|" + b.getPiece(id).getRow() + "|" + b.getPiece(id).getCol() + "|-1"));
         	}
